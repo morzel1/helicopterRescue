@@ -1,0 +1,3 @@
+open cmd prompt -> navigate to finished folder -> type "main.exe -f heli3_confer2.asm"
+
+IF WANTED TO BE RAN ON OTHER COMPUTERS MAKE SURE TO EDIT THE SConstruct FILE WITH APPROPRIATE LIBRARY LOCATIONS AND RECOMPILE THE PROGRAM

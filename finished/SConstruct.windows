@@ -1,0 +1,49 @@
+# SCons buildfile for skeloton
+import os
+
+SDLDIR = 'C:\Users\Michael\Desktop\SDL2-devel-2.0.5-mingw.tar\SDL2-devel-2.0.5-mingw\SDL2-2.0.5\i686-w64-mingw32' # change this to your base SDL2 directory (where the lib and include directories are)
+                # ex) C:\Users\yourname\SDL....
+IMGDIR = 'C:\Users\Michael\Desktop\SDL2-devel-2.0.5-mingw.tar\SDL2_image-devel-2.0.1-mingw.tar\SDL2_image-devel-2.0.1-mingw\SDL2_image-2.0.1\i686-w64-mingw32' # change this to your base SDL2 image directory (where the lib and include directories are)
+
+TTFDIR = 'C:\Users\Michael\Desktop\SDL2-devel-2.0.5-mingw.tar\SDL2_ttf-devel-2.0.14-mingw.tar\SDL2_ttf-devel-2.0.14-mingw\SDL2_ttf-2.0.14\i686-w64-mingw32' # change this to your base SDL2 ttf directory (where the lib and include directories are)
+
+MINIATDIR = "C:\Users\Michael\Downloads\miniat_windows\miniat\out" # base miniat directory (contains cache, external, out, peripherals, etc)
+
+MIXERDIR = "C:\Users\Michael\Desktop\SDL2-devel-2.0.5-mingw.tar\SDL2_mixer-devel-2.0.1-mingw.tar\SDL2_mixer-devel-2.0.1-mingw\SDL2_mixer-2.0.1\i686-w64-mingw32"
+
+# this makes it so that id doesn't matter if your #includes have 'SDL' in front of them or not
+FLAGS = ['-D_REENTRANT',
+         '-std=c++11',
+         '-I' + SDLDIR + '/include/SDL2', # SDL2 include directory
+         '-I' + IMGDIR + '/include/SDL2', # IMG  include directory
+         '-I' + TTFDIR + '/include/SDL2', # TTF  include directory
+         '-I' + SDLDIR + '/include',      # SDL2 include directory
+         '-I' + IMGDIR + '/include',      # IMG  include directory
+         '-I' + TTFDIR + '/include',      # TTF  include directory
+         '-I' + MINIATDIR + '/vm/inc',    # miniat include directory
+	 '-I' + MINIATDIR + '/vm/inc/miniat',
+         '-I' + MIXERDIR + '/include/SDL2', 
+         '-I' + MIXERDIR + '/include',
+        ]
+
+LIBDIRS = [
+           '-L' + SDLDIR + '/lib',          # SDL2 lib directory
+           '-L' + IMGDIR + '/lib',          # IMG  lib directory
+           '-L' + TTFDIR + '/lib',          # TTF  lib directory
+		   '-L' + MINIATDIR + '/lib',        # miniat library 
+		'-L' + MIXERDIR + '/lib'
+          ]
+		
+# set environment variable flags for compiling
+env = Environment(CC = 'C:\MinGW\bin\g++',
+                  CCFLAGS = FLAGS,
+				  LIBPATH = LIBDIRS,
+                  LIBS = ['SDL2', 'SDL2_image', 'SDL2_ttf', 'libminiat', 'SDL2_mixer'])
+                  
+# compile the program
+env.Program(['main.cpp', 'Sprite.cpp', 'peripherals.cpp', 'ports.cpp'])
+
+# move the executable to the windows folder
+os.system("move *.exe *.o windows")
+
+
